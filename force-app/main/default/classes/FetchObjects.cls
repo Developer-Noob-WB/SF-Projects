@@ -30,6 +30,7 @@ public class FetchObjects
     @auraEnabled(cacheable=true)
     public static list<sobject> fetchResult(string query)
     {
+        System.debug(query);
         list<sobject> data=new list<sobject>();
         Database.querylocator q=Database.getquerylocator(query);//gov limit 50M
         Database.querylocatoriterator it=q.iterator();
