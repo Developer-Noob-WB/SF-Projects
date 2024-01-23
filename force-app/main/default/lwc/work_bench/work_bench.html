@@ -1,0 +1,30 @@
+<template>
+    <lightning-card title="Run your query">
+        <p slot="footer">By Souvik Dutta</p>
+        <div class="slds-p-around_medium">
+            <template lwc:if={loadingObjectFlag}>
+                <lightning-combobox  class="c1" label="Choose the object" options={options} onchange={optionHandler}></lightning-combobox>
+            </template>
+            <template lwc:else>
+                <lightning-spinner alternative-text="Teach me something new" size="small"></lightning-spinner>
+            </template>
+        </div>
+        <div class="slds-p-around_medium">
+            <lightning-dual-listbox class="c2" label="Choose the fields" options={fieldsOption} onchange={fieldsHandler}></lightning-dual-listbox>
+            <br/><p>Add filter logic</p>
+            <div class="filter">
+                <lightning-combobox class="c3" label="Choose the fields" options={fieldsOption} onchange={filterFieldHandler}></lightning-combobox>
+                <lightning-combobox class="c4" label="Choose the operator" options={filterOptions} onchange={filterOperatorHandler}></lightning-combobox>
+                <lightning-textarea class="c5" label="Add the values" onchange={filterValueHandler}></lightning-textarea>
+                <lightning-button variant="brand" label="Add Filter" onclick={filterHandler}></lightning-button>
+            </div>
+        </div>
+        <div class="slds-p-around_medium">
+            <p>Your final query</p>
+            <lightning-textarea class="c6"></lightning-textarea>
+        </div>
+        <div class="slds-p-around_medium">
+            <lightning-button variant="success" label="Run" onclick={runQueryHandler}></lightning-button>
+        </div>
+    </lightning-card>
+</template>
