@@ -1,7 +1,13 @@
 <template>
     <lightning-card title="Result of the query">
         <p slot="footer">By Souvik Dutta</p>
-        <p>{actualQuery}</p>
-        <p>{queryNeedToSend}</p>
+        <div class="slds-p-around_medium">
+            <template lwc:if={isDataLoad}>
+                <lightning-datatable key-field="id1" data={data} columns={cols}></lightning-datatable>
+            </template>
+            <template lwc:else>
+                <lightning-spinner size="small" alternative-text="Tell me your insta id"></lightning-spinner>
+            </template>
+        </div>
     </lightning-card>
 </template>
