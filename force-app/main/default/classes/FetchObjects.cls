@@ -27,4 +27,16 @@ public class FetchObjects
         l.sort();
         return l;
     }
+    @auraEnabled(cacheable=true)
+    public static list<sobject> fetchResult(string query)
+    {
+        list<sobject> data=new list<sobject>();
+        Database.querylocator q=Database.getquerylocator(query);//gov limit 50M
+        Database.querylocatoriterator it=q.iterator();
+        while(it.hasNext())
+        {
+            data.add(it.next());
+        }
+        return data;
+    }
 }
