@@ -2,6 +2,7 @@
     <lightning-card title="Result of the query">
         <p slot="footer">By Souvik Dutta</p>
         <div class="slds-p-around_medium">
+            <p>Exported {numberOfRecord} records</p>
             <template lwc:if={isDataLoad}>
                 <lightning-datatable key-field="id1" data={data} columns={cols}></lightning-datatable>
             </template>

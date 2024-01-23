@@ -4,6 +4,7 @@ import {subscribe,MessageContext} from 'lightning/messageService';
 import fetchResult from '@salesforce/apex/FetchObjects.fetchResult';
 export default class Run_query extends LightningElement 
 {
+    numberOfRecord=0;
     actualQuery='';
     isDataLoad=false;
     @track data=[];
@@ -20,7 +21,8 @@ export default class Run_query extends LightningElement
     {
         if(data)
         {
-            console.log(JSON.stringify(data));
+            //console.log(JSON.stringify(data));
+            this.numberOfRecord=data.length;
             this.isDataLoad=true;
             this.makeDataTable(data);
         }
@@ -30,7 +32,7 @@ export default class Run_query extends LightningElement
             console.log(error);
         }
     }
-    makeDataTable(data)
+    makeDataTable(rawData)
     {
         //if you don't include id field in the query then by default
         //the id field will be present at the last but if you include
@@ -43,8 +45,16 @@ export default class Run_query extends LightningElement
         if(!tempArr.includes('Id'))
             tempArr.push('Id');
         this.cols=[];//initialize the array blank for saftey
+        this.data=[];//initialize the array blank for saftey
         tempArr.forEach(item=>{
             this.cols.push({label:item,fieldName:item,type:'text'});
+        });
+        rawData.forEach(item=>{
+            let tempObj={};
+            this.cols.forEach(col=>{
+                tempObj[col.fieldName]=item[col.fieldName];
+            });
+            this.data.push(tempObj);
         });
     }
 }
