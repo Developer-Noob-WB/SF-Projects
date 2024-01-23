@@ -1,4 +1,4 @@
-import { LightningElement,wire } from 'lwc';
+import { LightningElement,wire,track } from 'lwc';
 import sampleMC from '@salesforce/messageChannel/myMessageChannel__c';
 import {subscribe,MessageContext} from 'lightning/messageService';
 import fetchResult from '@salesforce/apex/FetchObjects.fetchResult';
@@ -6,8 +6,8 @@ export default class Run_query extends LightningElement
 {
     actualQuery='';
     isDataLoad=false;
-    data=[];
-    cols=[];
+    @track data=[];
+    @track cols=[];
     @wire(MessageContext)context;
     connectedCallback()
     {
@@ -37,5 +37,14 @@ export default class Run_query extends LightningElement
         //then in which order you write the query, in the same order
         //it will return the data, so we have to manipulate the datatable
         //accordingly. 
+        //console.log('makeDataTable called');
+        let tempArr=this.actualQuery.split(' ')[1].split(',');
+        //console.log(JSON.stringify(tempArr));
+        if(!tempArr.includes('Id'))
+            tempArr.push('Id');
+        this.cols=[];//initialize the array blank for saftey
+        tempArr.forEach(item=>{
+            this.cols.push({label:item,fieldName:item,type:'text'});
+        });
     }
 }
